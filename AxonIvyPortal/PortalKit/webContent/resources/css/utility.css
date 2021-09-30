@@ -242,6 +242,10 @@
   }
 }
 
+.ui-vertical-align-top {
+  vertical-align: top;
+}
+
 .ui-vertical-align-sub {
   vertical-align: sub;
 }

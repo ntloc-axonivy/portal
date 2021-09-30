@@ -1,0 +1,227 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:ic="http://ivyteam.ch/jsf/component" xmlns:p="http://primefaces.org/ui"
+  xmlns:pe="http://primefaces.org/ui/extensions" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<h:body>
+  <ui:composition template="/layouts/BasicTemplate.xhtml">
+    <ui:define name="title">ChartsDemo</ui:define>
+    <ui:define name="pageContent">
+
+    <style>
+      .piece-component {
+        padding: 0 !important;
+        margin-bottom: 20px; }
+      .MarBottom0 {
+        margin-bottom: 0; }
+      .can-work-on {
+        padding-left: 3px; }
+    </style>
+
+      <h2>Research/Prototype - How to create Statistic Charts with data in ES - external visualization technology</h2>
+
+      <h:form id="form">
+        <p:messages />
+        <h:panelGroup styleClass="ui-g">
+          <div class="card ui-g-12">
+            <div class="ui-g-6">
+              <p:fieldset toggleable="false" legend="Create a new chart" styleClass="">
+                <p:commandButton value="Review chart" styleClass="Fright" actionListener="#{chartJsConfigBean.onReview()}"
+                  update="#{p:component('chart-preview')}" />
+                <h3 class="MarBottom0">General Information</h3>
+                <h:panelGrid columns="2" styleClass="ui-fluid ui-g-12" columnClasses="ui-g-4, ui-g-8">
+                  <h:outputLabel value="Chart type" />
+                  <p:selectOneMenu id="chart-type" value="#{chartJsConfigBean.chartType}">
+                    <f:selectItem itemLabel="Select type" itemValue="" />
+                    <f:selectItems value="#{chartJsConfigBean.chartTypeSelection}" var="type" itemLabel="#{type.name}" itemValue="#{type}" />
+                    <p:ajax event="change" update="advance-config" listener="#{chartJsConfigBean.onSelectChartType()}" />
+                    <p:ajax event="itemSelect" update="advance-config" listener="#{chartJsConfigBean.onSelectChartType()}" />
+                  </p:selectOneMenu>
+
+                  <h:outputLabel value="Name" />
+                  <p:inputText id="chart-name" value="#{chartJsConfigBean.chartName}" required="true" />
+
+                  <h:outputLabel value="Chart data" />
+                  <p:selectOneMenu id="chart-data" value="#{chartJsConfigBean.dataType}">
+                    <f:selectItem itemLabel="Select data" itemValue="" />
+                    <f:selectItems value="#{chartJsConfigBean.dataTypeSelection}" var="dataType" itemLabel="#{dataType.name}" itemValue="#{dataType}" />
+                    <p:ajax event="change" update="filter-container advance-config" listener="#{chartJsConfigBean.onSelectChartDataType()}" />
+                    <p:ajax event="itemSelect" update="filter-container advance-config" listener="#{chartJsConfigBean.onSelectChartDataType()}" />
+                  </p:selectOneMenu>
+                </h:panelGrid>
+
+                <h:panelGroup id="advance-config" layout="block">
+                  <h3 class="MarBottom0">Chart configuration</h3>
+                  <!-- Bar chart -->
+                  <h:panelGrid columns="2" styleClass="ui-fluid ui-g-12" rendered="#{chartJsConfigBean.chartType.type eq 'bar'}"
+                    columnClasses="ui-g-4, ui-g-8">
+
+                    <h:outputLabel value="X-Axis Legend" />
+                    <p:inputText id="chart-x-label" value="#{chartJsConfigBean.xAxisName}" />
+
+                    <h:outputLabel value="X-Axis Data" />
+                    <p:autoComplete id="chart-xaxis-data" value="#{chartJsConfigBean.xAxisData}" scrollHeight="350"
+                      completeMethod="#{chartJsConfigBean.completeXAxisDataMethod}" var="xdata" itemValue="#{xdata}" itemLabel="#{xdata.displayName}"
+                      converter="pojoConverter" dropdown="true" moreText="More ...">
+                      <p:ajax event="change" update="filter-container" listener="#{chartJsConfigBean.onSelectXAris()}" />
+                      <p:ajax event="itemSelect" update="filter-container" listener="#{chartJsConfigBean.onSelectXAris()}" />
+                    </p:autoComplete>
+
+                    <h:outputLabel value="Y-Axis Legend" />
+                    <p:inputText id="chart-y" value="#{chartJsConfigBean.yAxisName}" />
+
+                    <h:outputLabel value="Y-Axis Data" />
+                    <p:selectOneMenu id="chart-yaxis-data" value="#{chartJsConfigBean.yAxisData}">
+                      <f:selectItem itemLabel="Select y-axis data" itemValue="" />
+                      <f:selectItems value="#{chartJsConfigBean.yAxisDataSelection}" var="ydata" itemLabel="#{ydata.name}" itemValue="#{ydata}" />
+                      <p:ajax event="change" update="filter-container" />
+                      <p:ajax event="itemSelect" update="filter-container" />
+                    </p:selectOneMenu>
+                  </h:panelGrid>
+
+                  <!-- Pie chart -->
+                  <h:panelGroup rendered="#{chartJsConfigBean.chartType.type eq 'pie'}" styleClass="ui-g-12" layout="block">
+                    <h:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8" styleClass="ui-g-12 ui-fluid">
+                      <h:outputLabel value="Column" />
+                      <h:panelGroup styleClass="">
+                        <!--                         <p:selectOneMenu id="piece-column" value="#{chartJsConfigBean.selectedColumn}" styleClass="ui-g-"> -->
+                        <!--                           <f:selectItem itemLabel="" itemValue="" /> -->
+                        <!--                           <f:selectItems value="#{chartJsConfigBean.availableColumns}" var="column" itemLabel="#{column}" itemValue="#{column}" /> -->
+                        <!--                           <p:ajax event="change" listener="#{chartJsConfigBean.onSelectPieColumn()}" /> -->
+                        <!--                           <p:ajax event="itemSelect" listener="#{chartJsConfigBean.onSelectPieColumn()}" /> -->
+                        <!--                         </p:selectOneMenu> -->
+                        <p:autoComplete id="piece-column" value="#{chartJsConfigBean.xAxisData}" scrollHeight="350"
+                          completeMethod="#{chartJsConfigBean.completeXAxisDataMethod}" var="xdata" itemValue="#{xdata}"
+                          itemLabel="#{xdata.displayName}" converter="pojoConverter" dropdown="true" moreText="More ...">
+                          <p:ajax event="change" update="filter-container" listener="#{chartJsConfigBean.onSelectXAris()}" />
+                          <p:ajax event="itemSelect" update="filter-container" listener="#{chartJsConfigBean.onSelectXAris()}" />
+                        </p:autoComplete>
+                      </h:panelGroup>
+
+                      <h:outputLabel value="KPIs" />
+                      <p:selectOneMenu id="kpi-data" value="#{chartJsConfigBean.yAxisData}">
+                        <f:selectItem itemLabel="Select KPIs data" itemValue="" />
+                        <f:selectItems value="#{chartJsConfigBean.yAxisDataSelection}" var="ydata" itemLabel="#{ydata.name}" itemValue="#{ydata}" />
+                        <p:ajax event="change" update="filter-container" />
+                        <p:ajax event="itemSelect" update="filter-container" />
+                      </p:selectOneMenu>
+                    </h:panelGrid>
+
+                    <!--   <h:panelGroup styleClass="ui-g-12">
+                      <p:commandButton value="Add new piece" actionListener="#{chartJsConfigBean.addNewPiece()}" update="pieces-chart" />
+                    </h:panelGroup>
+
+                    <h:panelGrid columns="2" columnClasses="ui-g-4, ui-g-8" id="pieces-chart" styleClass="ui-g-12">
+                      <h:outputLabel value="Pieces" />
+
+                      <ui:repeat var="piece" value="#{chartJsConfigBean.pieceCharts}">
+                        <h:panelGrid columns="2" styleClass="ui-fluid piece-component">
+                          <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText id="piece-name" value="#{piece.legend}" />
+                            <p:outputLabel value="Piece legend" for="piece-name" />
+                          </h:panelGroup>
+
+                          <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText id="piece-data" value="#{piece.data}" />
+                            <p:outputLabel value="Piece data" for="piece-data" />
+                          </h:panelGroup>
+                        </h:panelGrid>
+                      </ui:repeat> 
+                    </h:panelGrid> -->
+                  </h:panelGroup>
+                </h:panelGroup>
+
+                <h3 class="MarBottom0">Filters</h3>
+                <h:panelGroup id="filter-container" layout="block">
+
+                  <h:panelGrid rendered="#{chartJsConfigBean.dataType.type eq 'portal_case' or chartJsConfigBean.dataType.type eq 'portal_task'}"
+                    columns="2" styleClass="ui-g-12" columnClasses="ui-vertical-align-top">
+                    <h:outputLabel value="Can work on" />
+                    <p:selectBooleanCheckbox styleClass="can-work-on" value="#{chartJsConfigBean.canWorkOn}" />
+
+                    <h:outputLabel value="Category" />
+                    <p:selectManyCheckbox id="category" value="#{chartJsConfigBean.selectedCategories}" columns="3" layout="grid">
+                      <f:selectItems value="#{chartJsConfigBean.categoriesSelection}" var="category"
+                        itemLabel="#{empty category ? 'No name' :category}" itemValue="#{category}" />
+                    </p:selectManyCheckbox>
+
+                    <h:outputLabel value="State" />
+                    <h:panelGroup id="state">
+                      <p:selectManyCheckbox rendered="#{chartJsConfigBean.dataType.type eq 'portal_task'}"
+                        value="#{chartJsConfigBean.selectedTaskStatesFilter}" columns="3" layout="grid">
+                        <f:selectItems value="#{chartJsConfigBean.taskStatesFilter}" var="state" itemLabel="#{state.name()}" itemValue="#{state}" />
+                      </p:selectManyCheckbox>
+                      <p:selectManyCheckbox rendered="#{chartJsConfigBean.dataType.type eq 'portal_case'}"
+                        value="#{chartJsConfigBean.selectedCaseStatesFilter}" columns="3" layout="grid">
+                        <f:selectItems value="#{chartJsConfigBean.caseStatesFilter}" var="state" itemLabel="#{state.name()}" itemValue="#{state}" />
+                      </p:selectManyCheckbox>
+                    </h:panelGroup>
+
+                    <h:outputLabel value="Time Period" style="padding-top: 10px;" />
+                    <h:panelGrid columns="4">
+                      <h:outputLabel value="From" />
+                      <p:calendar showButtonPanel="true" />
+
+                      <h:outputLabel value="To" />
+                      <p:calendar showButtonPanel="true" />
+                    </h:panelGrid>
+
+                  </h:panelGrid>
+
+                  <h:panelGrid rendered="#{fn:contains(chartJsConfigBean.xAxisData.columnType, 'CUSTOM')}">
+                    <h:outputLabel value="Available data for customfield #{chartJsConfigBean.xAxisData.displayName}" />
+                    <p:selectManyCheckbox id="custom-field-data" value="#{chartJsConfigBean.selectedCustomfieldData}" layout="grid" columns="3">
+                      <f:selectItems value="#{chartJsConfigBean.customfieldDataSelection}" var="customfieldData" itemLabel="#{customfieldData}"
+                        itemValue="#{customfieldData}" />
+                    </p:selectManyCheckbox>
+                  </h:panelGrid>
+
+                  <h:outputText rendered="#{chartJsConfigBean.dataType eq null}">
+                    <p>Please select a chart data type to see all available filters</p>
+                  </h:outputText>
+
+                </h:panelGroup>
+              </p:fieldset>
+            </div>
+
+            <div class="ui-g-6">
+              <p:fieldset id="chart-preview" toggleable="false" legend="Preview chart" styleClass="">
+
+                <h:panelGroup rendered="#{chartJsConfigBean.chartName ne null}">
+                  <h3>Demo #{chartJsConfigBean.chartName} chart</h3>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{chartJsConfigBean.chartModel.type eq 'bar'}">
+                  <p:barChart model="#{chartJsConfigBean.chartModel}" style="width: 100%; height: 500px;" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{chartJsConfigBean.chartModel.type eq 'line'}">
+                  <p:lineChart model="#{chartJsConfigBean.chartModel}" style="width: 100%; height: 500px;" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{chartJsConfigBean.chartModel.type eq 'doughnut'}">
+                  <p:donutChart model="#{chartJsConfigBean.chartModel}" style="width: 100%; height: 500px;" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{chartJsConfigBean.chartModel.type eq 'pie'}">
+                  <p:pieChart model="#{chartJsConfigBean.chartModel}" style="width: 100%; height: 500px;" />
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{chartJsConfigBean.chartModel eq null}">
+                  <h3>Please configuration a chart</h3>
+                </h:panelGroup>
+
+              </p:fieldset>
+            </div>
+          </div>
+        </h:panelGroup>
+        <br />
+        <div class="command-btns Fright">
+          <p:commandLink id="cancel" actionListener="#{ivyWorkflowView.cancel()}" value="Cancel" styleClass="u-mar-right-15" />
+          <p:commandButton id="proceed" actionListener="#{logic.close}" value="Proceed" update="form" icon="ui-icon-check" />
+        </div>
+      </h:form>
+
+    </ui:define>
+  </ui:composition>
+</h:body>
+
+</html>

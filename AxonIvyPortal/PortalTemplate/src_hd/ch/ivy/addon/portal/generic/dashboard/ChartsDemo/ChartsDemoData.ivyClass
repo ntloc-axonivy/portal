@@ -1,0 +1,14 @@
+ChartsDemoData #class
+ch.ivy.addon.portal.generic.dashboard.ChartsDemo #namespace
+chartName String #field
+chartName PERSISTENT #fieldModifier
+xAxisName String #field
+xAxisName PERSISTENT #fieldModifier
+yAxisName String #field
+yAxisName PERSISTENT #fieldModifier
+taskStatesFilter java.util.List<ch.ivyteam.ivy.workflow.TaskState> #field
+taskStatesFilter PERSISTENT #fieldModifier
+selectedTaskStatesFilter String #field
+selectedTaskStatesFilter PERSISTENT #fieldModifier
+dataType String #field
+dataType PERSISTENT #fieldModifier

@@ -1,0 +1,9 @@
+RestClients:
+  Elasticsearch (Elastic Cloud API):
+    UUID: 1f4b4dd6-c518-42f9-8516-4fcb6dd4c22e
+    Url: https://api.elastic-cloud.com/api/v1/
+    Features:
+    - ch.ivyteam.ivy.rest.client.mapper.JsonFeature
+    OpenAPI:
+      SpecUrl: https://cloud.elastic.co/api/v1/api-docs/spec.json
+      Namespace: com.elastic.cloud.api.api.v1.client
