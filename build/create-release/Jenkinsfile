@@ -69,7 +69,7 @@ pipeline {
               for (docType in docTypes) {
                 bat """
                   for /r %%f in (${docModuleDir}\\target\\${docModuleArtifactId}-*-${docType}.zip) do (
-                    mvn deploy:deploy-file -DgroupId=ch.ivyteam.ivy.project.portal -DartifactId=${docModuleArtifactId} -Dversion=${releaseVersion} -Dclassifier=${docType} -Dfile=%%f -Durl=https://repo.axonivy.io/artifactory/ext-release-local/ -DrepositoryId=repo.axonivy.io
+                    mvn deploy:deploy-file -DgroupId=ch.ivyteam.ivy.project.portal -DartifactId=${docModuleArtifactId} -Dversion=${releaseVersion} -Dclassifier=${docType} -Dfile=%%f -Durl=https://nexus.axonivy.com/repository/maven-releases/ -DrepositoryId=nexus.axonivy.com
                   )
                 """
               }
