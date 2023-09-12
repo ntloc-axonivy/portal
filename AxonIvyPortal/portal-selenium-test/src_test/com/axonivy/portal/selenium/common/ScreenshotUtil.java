@@ -1,13 +1,17 @@
 package com.axonivy.portal.selenium.common;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.codeborne.selenide.WebDriverRunner;
 
@@ -52,6 +56,79 @@ public class ScreenshotUtil {
   public static void capturePageScreenshot(String screenshotName) throws IOException {
     WebDriver driver = WebDriverRunner.getWebDriver();
     File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    File fileScreenShot = new File(SCREENSHOT_FOLDER + screenshotName + SCREENSHOT_EXTENSION);
+    FileUtils.copyFile(screenshot, fileScreenShot);
+  }
+  
+  public static void captureHalfTopPageScreenShot(String screenshotName, Dimension size) throws IOException {
+    WebDriver driver = WebDriverRunner.getWebDriver();
+    resizeBrowser(size);
+
+    File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    getHalfOfPageScreenshot(screenshot, ScreenCoordinate.TOP_SIDE);
+    File fileScreenShot = new File(SCREENSHOT_FOLDER + screenshotName + SCREENSHOT_EXTENSION);
+    FileUtils.copyFile(screenshot, fileScreenShot);
+  }
+  public static void captureHalfTopPageScreenShot(String screenshotName) throws IOException {
+    WebDriver driver = WebDriverRunner.getWebDriver();
+    File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    getHalfOfPageScreenshot(screenshot, ScreenCoordinate.TOP_SIDE);
+    File fileScreenShot = new File(SCREENSHOT_FOLDER + screenshotName + SCREENSHOT_EXTENSION);
+    FileUtils.copyFile(screenshot, fileScreenShot);
+  }
+  
+  public enum ScreenCoordinate {
+    LEFT_SIDE, RIGHT_SIDE, TOP_SIDE, BOTTOM_SIDE, CENTER_TOP_SIDE, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT;
+  }
+  
+  private static File getHalfOfPageScreenshot(File screenshot, ScreenCoordinate coordinateSide) throws IOException {
+    BufferedImage original = ImageIO.read(screenshot);
+    int coordinateX = 0;
+    int coordinateY = 0;
+    int width = original.getWidth();
+    int height = original.getHeight();
+    switch (coordinateSide) {
+      case TOP_SIDE:
+        height = original.getHeight()/2;
+        break;
+      case RIGHT_SIDE:
+        coordinateX = original.getWidth()/2;
+        if (coordinateX + width > original.getWidth()) {
+          width = original.getWidth() - coordinateX;
+        }
+        break;
+      case BOTTOM_SIDE:
+        break;
+      case LEFT_SIDE:
+        width = original.getWidth()/2;
+        break;
+      case TOP_RIGHT:
+        coordinateX = original.getWidth()/2;
+        if (coordinateX + width > original.getWidth()) {
+          width = original.getWidth() - coordinateX;
+        }
+        height = original.getHeight()/2;
+        break;
+      case CENTER_TOP_SIDE:
+        coordinateX = original.getWidth()/4;
+        coordinateY = 0;
+        width = original.getWidth()/2;
+        height = original.getHeight()/2;
+        break;
+      default:
+        break;
+    }
+    BufferedImage halfOfScreenshot = original.getSubimage(
+        coordinateX,
+        coordinateY, 
+        width, 
+        height);
+    ImageIO.write(halfOfScreenshot, "png", screenshot);
+    return screenshot;
+  }
+  
+  public static void captureElementScreenshot(WebElement element, String screenshotName) throws IOException {
+    File screenshot = element.getScreenshotAs(OutputType.FILE);
     File fileScreenShot = new File(SCREENSHOT_FOLDER + screenshotName + SCREENSHOT_EXTENSION);
     FileUtils.copyFile(screenshot, fileScreenShot);
   }
