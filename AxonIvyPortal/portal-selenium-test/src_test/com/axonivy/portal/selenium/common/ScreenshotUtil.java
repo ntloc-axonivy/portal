@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -131,5 +132,66 @@ public class ScreenshotUtil {
     File screenshot = element.getScreenshotAs(OutputType.FILE);
     File fileScreenShot = new File(SCREENSHOT_FOLDER + screenshotName + SCREENSHOT_EXTENSION);
     FileUtils.copyFile(screenshot, fileScreenShot);
+  }
+
+public static void maximizeBrowser() {
+    WebDriverRunner.getWebDriver().manage().window().maximize();
+    Sleeper.sleep(300);
+  }
+
+  public static void executeDecorateJs(String function) {
+    var jsExecutor = (JavascriptExecutor) WebDriverRunner.getWebDriver();
+    try {
+      jsExecutor.executeScript(function);
+    } catch (Exception e) {
+      // In case `ReferenceError: js function is not defined` then try again
+      Sleeper.sleep(2000);
+      jsExecutor.executeScript(function);
+    }
+    Sleeper.sleep(200); // Wait for JS executed successfully
+  }
+
+  public static void captureElementWithMarginOptionScreenshot(WebElement element, String screenshotName, ScreenshotMargin screenshotMargin) throws IOException {
+    WebDriver driver = WebDriverRunner.getWebDriver();
+    File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+    File fileScreenShot = new File(SCREENSHOT_FOLDER + screenshotName + SCREENSHOT_EXTENSION);
+    addMarginForImage(element, screenshot, screenshotMargin);
+    FileUtils.copyFile(screenshot, fileScreenShot);
+  }
+
+  private static File addMarginForImage(WebElement element, File fileScreenShot, ScreenshotMargin screenshotMargin) throws IOException {
+    BufferedImage original = ImageIO.read(fileScreenShot);
+    int coordinateX = element.getLocation().getX() - screenshotMargin.getMarginLeft();
+    int coordinateY = element.getLocation().getY() - screenshotMargin.getMarginTop();
+    int width = element.getSize().getWidth() + screenshotMargin.getMarginRight() + screenshotMargin.getMarginLeft();
+    int height = element.getSize().getHeight() + screenshotMargin.getMarginBottom() + screenshotMargin.getMarginTop();
+
+    if (coordinateX < 0) {
+      coordinateX = 0;
+    } else if (coordinateX > original.getWidth()) {
+      coordinateX = original.getWidth();
+    }
+
+    if (coordinateY < 0) {
+      coordinateY = original.getMinY();
+    } else if (coordinateY > original.getHeight()) {
+      coordinateY = original.getHeight();
+    }
+
+    if (width > original.getWidth() || width + coordinateX > original.getWidth()) {
+      width = original.getWidth() - coordinateX;
+    }
+
+    if (height > original.getHeight() || height + coordinateY > original.getHeight()) {
+      height = original.getHeight() - coordinateY;
+    }
+
+    BufferedImage screenshot = original.getSubimage(
+        coordinateX,
+        coordinateY, 
+        width, 
+        height);
+    ImageIO.write(screenshot, "png", fileScreenShot);
+    return fileScreenShot;
   }
 }
