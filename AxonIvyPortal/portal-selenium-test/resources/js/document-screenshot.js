@@ -12,6 +12,13 @@ function appendStepAnnotation($element, number, top, left) {
   $('body').append($marker);
 }
 
+function removeAllDecorations() {
+  $(".marker").remove();
+  $(".red-thick-outline").removeClass("red-thick-outline");
+  $(".red-medium-outline").removeClass("red-medium-outline");
+  $(".red-medium-border").removeClass("red-medium-border");
+}
+
 function createRedThickOutline($element) {
   $element.addClass("red-thick-outline");
 }

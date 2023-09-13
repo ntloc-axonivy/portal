@@ -34,7 +34,6 @@ public class LegacyDashboardScreenshotTest extends ScreenshotBaseTest{
     redirectToRelativeLink(createUserFavoriteProcess);
     redirectToNewDashBoard();
     homePage = new LegacyDashboardPage();
-    homePage.waitForStatisticRendered();
   }
 
   @Test
@@ -49,21 +48,21 @@ public class LegacyDashboardScreenshotTest extends ScreenshotBaseTest{
   @Test
   public void screenshotDashboard() throws IOException {
     ScreenshotUtil.maximizeBrowser();
-    homePage.waitUtilProcessWidgetDisplayed();
+    homePage.waitForStatisticFinishAnimation();
     ScreenshotUtil.captureElementScreenshot(homePage.getProcessWidgetElement(), ScreenshotUtil.DASHBOARD_FOLDER + "process-widget");
-    homePage.waitForStatisticRendered();
     ScreenshotUtil.captureElementScreenshot(homePage.getStatisticWidgetElement(), ScreenshotUtil.DASHBOARD_FOLDER + "statistic-widget");
+
     ScreenshotUtil.resizeBrowser(new Dimension(SCREENSHOT_HD_WIDTH, 800));
+    homePage.waitForStatisticFinishAnimation();
     ScreenshotUtil.captureElementScreenshot(homePage.getTaskWidgetElement(), ScreenshotUtil.DASHBOARD_FOLDER + "task-widget");
   }
 
   @Test
   public void screenshotDashboardWithAnnotation() throws IOException {
-    redirectToNewDashBoard();
     ScreenshotUtil.maximizeBrowser();
+    homePage.waitForStatisticFinishAnimation();
     ScreenshotUtil.executeDecorateJs("numberingStatisticWidget();");
     homePage = new LegacyDashboardPage();
-    homePage.waitForStatisticRendered();
     ScreenshotUtil.captureElementScreenshot(homePage.getStatisticWidgetElement(), ScreenshotUtil.DASHBOARD_FOLDER + "statistics-key-information");
 
     ScreenshotUtil.resizeBrowser(new Dimension(1100, 800));
@@ -78,7 +77,7 @@ public class LegacyDashboardScreenshotTest extends ScreenshotBaseTest{
     ScreenshotUtil.resizeBrowser(new Dimension(SCREENSHOT_WIDTH, 800));
     MainMenuPage mainMenuPage = new MainMenuPage();
     mainMenuPage.openLegacyDashboard();
-    homePage.waitForStatisticRendered();
+    homePage.waitForStatisticFinishAnimation();
     ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.DASHBOARD_FOLDER + "legacy-dashboard");
     ScreenshotUtil.executeDecorateJs("highlightAndNumberingDashboardSections();");
     ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.DASHBOARD_FOLDER + "dashboard-3-sections");
@@ -88,5 +87,23 @@ public class LegacyDashboardScreenshotTest extends ScreenshotBaseTest{
     taskWidgetPage.openCompactSortMenu();
     ScreenshotUtil.executeDecorateJs("numberingTaskFilterAndSort();");
     ScreenshotUtil.captureElementScreenshot(homePage.getTaskWidgetElement(), ScreenshotUtil.DASHBOARD_FOLDER + "personal-tasks-sort-and-search-features");
+  }
+
+  @Test
+  public void screenshotHeaderFooter() throws IOException {
+    redirectToRelativeLink(LegacyDashboardPage.PORTAL_EXAMPLES_HOME_PAGE_URL);
+    MainMenuPage menuPage = new MainMenuPage();
+    menuPage.openTaskList();
+    ScreenshotUtil.resizeBrowserAndCaptureWholeScreen(ScreenshotUtil.DASHBOARD_FOLDER + "page-header-footer", new Dimension(SCREENSHOT_WIDTH, 900));
+  }
+
+  @Test
+  public void screenshotWithEnvironmentInfo() throws IOException {
+    updatePortalSetting(Variable.SHOW_ENVIRONMENT_INFO.getKey(), "true");
+    homePage = new LegacyDashboardPage();
+    homePage.waitForGrowlMessageDisappear();
+    ScreenshotUtil.resizeBrowser(new Dimension(1200, 500));
+    ScreenshotUtil.executeDecorateJs("highlightServerInfo()");
+    ScreenshotUtil.captureHalfRightPageScreenShot(ScreenshotUtil.DASHBOARD_FOLDER + "environment-info");
   }
 }

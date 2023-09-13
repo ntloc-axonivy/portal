@@ -11,6 +11,7 @@ import com.axonivy.portal.selenium.page.TemplatePage;
 
 public class LegacyDashboardPage extends TemplatePage {
 
+  public final static String PORTAL_EXAMPLES_HOME_PAGE_URL = "portal-developer-examples/164211E97C598DAA/DefaultApplicationHomePage.ivp";
 
   @Override
   protected String getLoadedLocator() {
@@ -20,8 +21,12 @@ public class LegacyDashboardPage extends TemplatePage {
   /** 
    * Wait for statistic charts are displayed in 5s
    */
-  public void waitForStatisticRendered() {
+  public void waitForStatisticFinishAnimation() {
     $(".js-loading-text").shouldBe(disappear, DEFAULT_TIMEOUT);
+    openThenCloseStatisticInfoDialog();
+  }
+
+  private void openThenCloseStatisticInfoDialog() {
     $("a[id^='statistics-widget:statistic-dashboard-widget:statistic-carousel:0']").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
     $("div[id='statistics-widget:statistic-dashboard-widget:chart-details-dialog']").shouldBe(appear, DEFAULT_TIMEOUT).$("div.ui-dialog-content").$("button").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
     $("div[id='statistics-widget:statistic-dashboard-widget:chart-details-dialog']").shouldBe(disappear, DEFAULT_TIMEOUT);
@@ -30,12 +35,6 @@ public class LegacyDashboardPage extends TemplatePage {
   public void waitForGrowlMessageDisappear() {
     $("div[id='portal-global-growl_container']").shouldBe(disappear, DEFAULT_TIMEOUT).$("div.ui-growl-message")
         .shouldBe(disappear, DEFAULT_TIMEOUT);
-  }
-
-  public void waitUtilProcessWidgetDisplayed() {
-    $(".process-widget").shouldBe(appear, DEFAULT_TIMEOUT);
-    $(".js-loading-text").shouldBe(disappear, DEFAULT_TIMEOUT);
-    $(".user-process-container").shouldBe(appear, DEFAULT_TIMEOUT);
   }
 
   public WebElement getProcessWidgetElement() {
