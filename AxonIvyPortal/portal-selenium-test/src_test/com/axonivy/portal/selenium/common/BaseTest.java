@@ -24,7 +24,7 @@ public class BaseTest {
 
   private String designerLogoutUrl = "http://localhost:8081/designer/logout";
   private final static String LOGIN_URL_PATTERN = "/PortalKitTestHelper/1636734E13CEC872/login.ivp?username=%s&password=%s";
-  private final static String PORTAL_HOME_PAGE_URL = "/portal/1549F58C18A6C562/DefaultApplicationHomePage.ivp";
+  protected final static String PORTAL_HOME_PAGE_URL = "/portal/1549F58C18A6C562/DefaultApplicationHomePage.ivp";
   protected final static Duration DEFAULT_TIMEOUT = Duration.ofSeconds(45);
   
   public BaseTest() {}
