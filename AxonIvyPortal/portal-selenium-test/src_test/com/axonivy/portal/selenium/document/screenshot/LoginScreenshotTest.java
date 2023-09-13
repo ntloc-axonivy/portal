@@ -13,24 +13,21 @@ import com.axonivy.portal.selenium.common.SystemProperties;
 import com.axonivy.portal.selenium.page.LoginPage;
 
 @IvyWebTest
-public class ForgotPasswordScreenshotTest extends ScreenshotBaseTest {
+public class LoginScreenshotTest extends ScreenshotBaseTest {
 
   @Override
   @BeforeEach
   public void setup() {
-    super.setup();
-    redirectToRelativeLink(PORTAL_HOME_PAGE_URL);
+    launchBrowserAndGotoRelativeLink(PORTAL_HOME_PAGE_URL);
     if (!SystemProperties.isInServerMode()) {
       launchBrowserAndLogoutInDesigner();
     }
   }
 
   @Test
-  public void testForgotPassword() throws IOException {
-    LoginPage loginPage = new LoginPage();
-    loginPage.forgotPassword();
+  public void testLogin() throws IOException {
     ScreenshotUtil.resizeBrowser(new Dimension(1024, 768));
-    loginPage.waitForEmailAddressIsFocused();
-    ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.FORGOT_PASSWORD + "send-email-screen");
+    new LoginPage().waitForUsernameInputIsFocused();
+    ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.LOGIN_FOLDER + "login-form");
   }
 }

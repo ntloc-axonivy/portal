@@ -33,4 +33,8 @@ public class LoginPage extends TemplatePage {
   public void waitForEmailAddressIsFocused() {
     $("input[id$='forgot-password:forgot-password-form:email']").shouldBe(Condition.focused, DEFAULT_TIMEOUT);
   }
+  
+  public void waitForUsernameInputIsFocused() {
+    $("input[id$='login:login-form:username']").shouldBe(Condition.focused, DEFAULT_TIMEOUT);
+  }
 }
