@@ -1,9 +1,12 @@
 package com.axonivy.portal.selenium.page;
 
 import static com.codeborne.selenide.Condition.appear;
+import static com.codeborne.selenide.Condition.disappear;
 import static com.codeborne.selenide.Selenide.$;
 
 import java.util.List;
+
+import org.openqa.selenium.WebElement;
 
 import com.axonivy.portal.selenium.common.FileHelper;
 import com.codeborne.selenide.Condition;
@@ -281,13 +284,14 @@ public class DashboardConfigurationPage extends TemplatePage {
     return $("div[id$=':dashboard-creation-details-dialog']");
   }
   
-  public void openMultiLanguageDialog() {
+  public WebElement openMultiLanguageDialog() {
     getAddLanguageButton().click();
-    $("div[id$=':dashboard-creation-component:title-language-config:multiple-languages-dialog']").shouldBe(Condition.disappear, DEFAULT_TIMEOUT);
+    return $("div[id$=':dashboard-creation-component:title-language-config:multiple-languages-dialog']").shouldBe(Condition.appear, DEFAULT_TIMEOUT);
   }
   
   public void cancelMultiLanguageDialog() {
-    $("a[id$=':multi-language-cancel-button']").shouldBe(getClickableCondition()).click();
+    $("a[id$=':multi-language-cancel-button']").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    $("div[id$=':dashboard-creation-component:title-language-config:multiple-languages-dialog']").shouldBe(Condition.disappear, DEFAULT_TIMEOUT);
   }
   
   public void cancelCreateDashboard() {
@@ -328,5 +332,28 @@ public class DashboardConfigurationPage extends TemplatePage {
   
   public void cancelImportDashboard() {
     $("a[id$=':dashboard-import-close-button']").shouldBe(getClickableCondition()).click();
+  }
+
+  public WebElement getConfigurationFilter() {
+    return $("widget-configuration-form:new-widget-configuration-component:filter-container").shouldBe(appear, DEFAULT_TIMEOUT);
+  }
+
+  public WebElement openManageColumnDialog(boolean isTask) {
+    String manageColumnPattern = "widget-configuration-form:new-widget-configuration-component:%s-widget-preview:column-toggler";
+    String manageColumnLinkId = isTask ? String.format(manageColumnPattern, "task") : String.format(manageColumnPattern, "case");
+    $("[id='" + manageColumnLinkId + "']").shouldBe(appear, DEFAULT_TIMEOUT)
+      .shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    
+    String manageColumnDialogId = "widget-configuration-form:new-widget-configuration-component:column-management-component:column-management-dialog";
+    return $("[id='" + manageColumnDialogId + "']").shouldBe(appear, DEFAULT_TIMEOUT);
+  }
+
+  public SelenideElement getConfigurationDialog() {
+    return $("div[id='new-widget-configuration-dialog']").shouldBe(appear, DEFAULT_TIMEOUT);
+  }
+
+  public void closeConfigurationDialog() {
+    getConfigurationDialog().$(".ui-dialog-footer").$("a").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    $("div[id='new-widget-configuration-dialog']").shouldBe(disappear, DEFAULT_TIMEOUT);
   }
 }

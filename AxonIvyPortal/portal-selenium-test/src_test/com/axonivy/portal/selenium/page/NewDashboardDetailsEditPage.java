@@ -4,6 +4,8 @@ import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 
+import org.openqa.selenium.WebElement;
+
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -15,8 +17,9 @@ public class NewDashboardDetailsEditPage extends TemplatePage {
     return "#add-button";
   }
 
-  public void addWidget() {
+  public WebElement addWidget() {
     $("button[id='add-button']").shouldBe(appear, DEFAULT_TIMEOUT).shouldBe(getClickableCondition()).click();
+    return $("div[id$='new-widget-dialog_content']").shouldBe(appear, DEFAULT_TIMEOUT);
   }
 
   public TaskEditWidgetNewDashBoardPage addNewTaskWidget() {
@@ -161,5 +164,10 @@ public class NewDashboardDetailsEditPage extends TemplatePage {
   public DashboardNewsWidgetConfigurationPage addNewsFeedWidget() {
     addWidgetByName("News feed widget");
     return new DashboardNewsWidgetConfigurationPage();
+  }
+
+  public void waitForCaseWidgetLoaded() {
+    $("div[id$='dashboard-cases-container']").shouldBe(appear, DEFAULT_TIMEOUT)
+      .$("div[id$='dashboard-cases']").shouldBe(Condition.appear, DEFAULT_TIMEOUT);
   }
 }

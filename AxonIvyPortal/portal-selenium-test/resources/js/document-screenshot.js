@@ -12,19 +12,16 @@ function appendStepAnnotation($element, number, top, left) {
   $('body').append($marker);
 }
 
-function removeAllDecorations() {
-  $(".marker").remove();
-  $(".red-thick-outline").removeClass("red-thick-outline");
-  $(".red-medium-outline").removeClass("red-medium-outline");
-  $(".red-medium-border").removeClass("red-medium-border");
-}
-
 function createRedThickOutline($element) {
   $element.addClass("red-thick-outline");
 }
 
 function createRedMediumOutline($element) {
   $element.addClass("red-medium-outline");
+}
+
+function clearRedMediumOutline($element) {
+  $element.removeClass("red-medium-outline");
 }
 
 function createRedMediumBorder($element) {
@@ -139,8 +136,11 @@ function highlightAddExternalDialogItem() {
   var icon = $("[id$='add-external-link-form:external-link-icon:awesome-icon-selection']");
   appendStepAnnotation(icon, "6", -10, icon.width());
   
+  var uploadButton = $("[id$='add-external-link-form:external-link-image-upload']");
+  appendStepAnnotation(uploadButton, "7", 0, 80);
+  
   var addButton = $("[id$='process-widget:adding-new-external-link-command']");
-  appendStepAnnotation(addButton, "7", -25, -5);
+  appendStepAnnotation(addButton, "8", -25, -5);
 }
 
 function highlightProcessItems() {
@@ -253,7 +253,7 @@ function highlightCustomColumnsConfigOnCaseList() {
 }
 
 function highlightCaseCreatorFilter() {
-  var filterLabel = $("[id$=':creator-filter:filter-open-form:advanced-filter-command']").find("span.ui-button-text");
+  var filterLabel = $("[id$=':creator-filter:filter-open-form:advanced-filter-command']");
   createRedMediumOutline(filterLabel);
   appendStepAnnotation(filterLabel, "1", -25, -30);
   
@@ -349,7 +349,7 @@ function highlightCustomColumnsConfigOnTaskList() {
 
 
 function highlightTaskStateFilter() {
-  var filterLabel = $("[id$=':state-filter:filter-open-form:advanced-filter-command']").find("span.ui-button-text");
+  var filterLabel = $("[id$=':state-filter:filter-open-form:advanced-filter-command']");
   createRedMediumOutline(filterLabel);
   appendStepAnnotation(filterLabel, "1", -25, -30);
   
@@ -510,6 +510,14 @@ function highlightCaseExportToExcelButton() {
   createRedMediumOutline($("a[id$=':case-export-to-excel']"));
 }
 
+function highlightWidgetExportToExcelLinkForTask() {
+  createRedMediumOutline($("form[id$=':export-to-excel-form-0'] > a"));
+}
+
+function highlightWidgetExportToExcelLinkForCase() {
+  createRedMediumOutline($("form[id$=':export-to-excel-form-1'] > a"));
+}
+
 function highlightProcessOverviewLink() {
   $(".task-detail-section-title").removeClass("u-truncate-text");
   $(".case-history-button-container").removeClass("u-truncate-text");
@@ -539,6 +547,10 @@ function highlightIFrameWidgetTaskDetails() {
 
 function highlightEmailSettings() {
   createRedMediumOutline($("div[id$='email-setting-container']"));
+}
+
+function clearHighlightUserName() {
+  clearRedMediumOutline($('#user-settings-menu'));
 }
 
 function highlightUserName() {
