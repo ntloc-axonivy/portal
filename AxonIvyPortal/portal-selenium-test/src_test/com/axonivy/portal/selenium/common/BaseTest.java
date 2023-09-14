@@ -87,7 +87,8 @@ public class BaseTest {
   protected String denyDashboardImportPublicPermissionUrl = "PortalKitTestHelper/14DE09882B540AD5/denyDashboardImportPublicPermission.ivp";
   protected String grantDashboardShareLinkPermissionUrl = "PortalKitTestHelper/14DE09882B540AD5/grantDashboardShareLinkPermission.ivp";
   protected String denyDashboardShareLinkPermissionUrl = "PortalKitTestHelper/14DE09882B540AD5/denyDashboardShareLinkPermission.ivp";
-  
+  protected String showProcessViewerUrl = "portal/1549F58C18A6C562/PortalProcessViewer.ivp?caseId=%s&processKey=%s";
+
 
   protected void redirectToNewDashBoard() {
     open(EngineUrl.createProcessUrl(PORTAL_HOME_PAGE_URL));

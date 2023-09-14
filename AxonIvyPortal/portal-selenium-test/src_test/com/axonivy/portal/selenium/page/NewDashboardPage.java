@@ -754,4 +754,16 @@ public class NewDashboardPage extends TemplatePage {
     $("#search-results-tabview").shouldBe(appear, DEFAULT_TIMEOUT);
     return new GlobalSearchResultPage();
   }
+  
+  public void startTask(int index) {
+    String cssSelector = String.format("a[id$=':task-component:dashboard-tasks:%d:dashboard-tasks-columns:0:start-task']", index);
+    $(cssSelector).shouldBe(getClickableCondition()).click();
+  }
+
+  public void waitForTaskStartButtonDisplay(int index) {
+    String cssSelector = String.format("a[id*='task-component:dashboard-tasks:%d']", index);
+    $(cssSelector).shouldBe(appear, DEFAULT_TIMEOUT);
+
+    
+  }
 }

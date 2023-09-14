@@ -16,7 +16,9 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 
+
 public abstract class TemplatePage extends AbstractPage {
+  protected static final String COMPONENT_PAGE_LOCATOR = "//*[contains(@id,'theme-selection')]";
 
   // If page load more than 45s, mark it failed by timeout
   protected long getTimeOutForLocator() {
@@ -46,5 +48,9 @@ public abstract class TemplatePage extends AbstractPage {
   public void waitForGrowlMessageDisappear() {
     $("div[id='portal-global-growl_container']").shouldBe(appear, DEFAULT_TIMEOUT)
           .$("div.ui-growl-message").shouldBe(disappear, DEFAULT_TIMEOUT);
+  }
+  
+  public void waitForGrowlMessageDisplayClearly() {
+    $("div[id='portal-global-growl_container']").shouldBe(appear, DEFAULT_TIMEOUT).$("div.ui-growl-message").hover();
   }
 }

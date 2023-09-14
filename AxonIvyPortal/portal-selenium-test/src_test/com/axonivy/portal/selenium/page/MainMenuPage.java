@@ -46,6 +46,14 @@ public class MainMenuPage extends TemplatePage {
     return new ProcessWidgetPage();
   }
 
+  public StatisticWidgetPage openStatisticPage() {
+    waitLeftMenuReady();
+    WaitHelper.waitForNavigation(() -> {
+      clickByJavaScript($(".layout-menu li[role='menuitem'] a.STATISTICS").shouldBe(appear, DEFAULT_TIMEOUT).shouldBe(getClickableCondition()));
+    });
+    return new StatisticWidgetPage();
+  }
+
   public LegacyDashboardPage openLegacyDashboard() {
     waitLeftMenuReady();
     WaitHelper.waitForNavigation(() -> {
@@ -53,6 +61,7 @@ public class MainMenuPage extends TemplatePage {
     });
     return new LegacyDashboardPage();
   }
+  
 
   public void openUserSettingMenu() {
     $("#top-menu").shouldBe(appear, DEFAULT_TIMEOUT);
