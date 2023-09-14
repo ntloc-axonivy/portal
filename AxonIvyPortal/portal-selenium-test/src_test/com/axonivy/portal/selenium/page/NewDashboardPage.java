@@ -2,6 +2,8 @@ package com.axonivy.portal.selenium.page;
 
 import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.disappear;
+import static com.codeborne.selenide.Condition.cssValue;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -12,8 +14,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.axonivy.portal.selenium.common.WaitHelper;
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.HoverOptions;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 
@@ -72,6 +76,45 @@ public class NewDashboardPage extends TemplatePage {
     $("button[id$='remove-widget-button']").shouldBe(appear, DEFAULT_TIMEOUT).shouldBe(getClickableCondition())
         .click();
     $("div#remove-widget-dialog").shouldBe(disappear, DEFAULT_TIMEOUT);
+  }
+
+  public void waitForProcessViewerLoading(SelenideElement processViewer) {
+    processViewer.$("[id$='loading']").shouldBe(disappear, DEFAULT_TIMEOUT);
+    WebDriver driver = WebDriverRunner.getWebDriver();
+    processViewer.$("iframe").shouldBe(appear, DEFAULT_TIMEOUT);
+    switchToIframeWithId("process-viewer");
+    $("svg.sprotty-graph").shouldBe(Condition.appear, DEFAULT_TIMEOUT);
+    driver.switchTo().defaultContent();
+    waitForWidgetLoadedByExpandThenCollapse(processViewer);
+  }
+
+  public WebElement waitAndGetProcessViewerWidget(int index) {
+    var widget = $$(".process-viewer-widget-panel").shouldBe(CollectionCondition.sizeGreaterThan(index), DEFAULT_TIMEOUT)
+        .get(index).shouldBe(appear, DEFAULT_TIMEOUT);
+    waitForProcessViewerLoading(widget);
+    return widget.ancestor(".grid-stack-item");
+  }
+
+  public WebElement waitAndGetStatisticChart(int index) {
+    var widget = $$(".statistic-chart-widget").shouldBe(CollectionCondition.sizeGreaterThan(index), DEFAULT_TIMEOUT)
+        .get(index).shouldBe(appear, DEFAULT_TIMEOUT);
+    widget.$("[id$='loading']").shouldBe(disappear, DEFAULT_TIMEOUT);
+    waitForWidgetLoadedByExpandThenCollapse(widget);
+    return widget.ancestor(".grid-stack-item");
+  }
+
+  public WebElement waitAndGetNewsWidget(int index) {
+    var widget = $$(".news-widget").shouldBe(CollectionCondition.sizeGreaterThan(index), DEFAULT_TIMEOUT)
+        .get(index).shouldBe(appear, DEFAULT_TIMEOUT);
+    widget.$("[id$='loading']").shouldBe(disappear, DEFAULT_TIMEOUT);
+    widget.$("[id$=':add-news-button']").shouldBe(appear, DEFAULT_TIMEOUT);
+    return widget.ancestor(".grid-stack-item");
+  }
+
+  private void waitForWidgetLoadedByExpandThenCollapse(SelenideElement widget) {
+    widget.$(".expand-link").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    widget.$(".collapse-link").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    widget.$(".expand-link").shouldBe(appear, DEFAULT_TIMEOUT);
   }
 
   public WelcomeEditWidgetNewDashboardPage editWelcomeWidgetConfiguration(String widgetId) {

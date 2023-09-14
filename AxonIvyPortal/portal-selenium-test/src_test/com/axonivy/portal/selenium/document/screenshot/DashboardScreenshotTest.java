@@ -19,11 +19,17 @@ import com.axonivy.portal.selenium.page.CaseEditWidgetNewDashBoardPage;
 import com.axonivy.portal.selenium.page.CustomWidgetNewDashBoardPage;
 import com.axonivy.portal.selenium.page.DashboardConfigurationPage;
 import com.axonivy.portal.selenium.page.DashboardModificationPage;
+import com.axonivy.portal.selenium.page.DashboardNewsWidgetConfigurationPage;
+import com.axonivy.portal.selenium.page.DashboardNewsWidgetPage;
 import com.axonivy.portal.selenium.page.MainMenuPage;
 import com.axonivy.portal.selenium.page.NewDashboardDetailsEditPage;
 import com.axonivy.portal.selenium.page.NewDashboardPage;
 import com.axonivy.portal.selenium.page.ProcessEditWidgetNewDashBoardPage;
+import com.axonivy.portal.selenium.page.ProcessViewerWidgetNewDashBoardPage;
+import com.axonivy.portal.selenium.page.StatisticEditWidgetNewDashboardPage;
 import com.axonivy.portal.selenium.page.TaskEditWidgetNewDashBoardPage;
+import com.axonivy.portal.selenium.page.WelcomeEditWidgetNewDashboardPage;
+import com.axonivy.portal.selenium.util.ConfigurationJsonUtil;
 
 @IvyWebTest(headless = false)
 public class DashboardScreenshotTest extends ScreenshotBaseTest{
@@ -38,7 +44,6 @@ public class DashboardScreenshotTest extends ScreenshotBaseTest{
     updatePortalSetting(Variable.ENABLE_GROUP_CHAT.getKey(), "true");
     redirectToRelativeLink(createTestingTasksUrl);
     redirectToRelativeLink(createTestingTasksUrl);
-    redirectToRelativeLink(createUserFavoriteProcess);
     homePage = new NewDashboardPage();
   }
 
@@ -195,7 +200,85 @@ public class DashboardScreenshotTest extends ScreenshotBaseTest{
     ScreenshotUtil.captureElementScreenshot(processConfigurationPage.getConfigurationDialog(), ScreenshotUtil.NEW_DASHBOARD_FOLDER + "process-widget-modes");
   }
 
+  @Test
+  public void screenshotProcessViewerWidget() throws IOException {
+    ScreenshotUtil.maximizeBrowser();
+    loginAsAdminAndAddPublicWidget(NewDashboardDetailsEditPage.PROCESS_VIEWER_WIDGET);
+    ProcessViewerWidgetNewDashBoardPage processViewerPage = new ProcessViewerWidgetNewDashBoardPage();
+    processViewerPage.selectProcess("Categoried Leave Request");
+    ScreenshotUtil.captureElementWithMarginOptionScreenshot(processViewerPage.getConfigurationDialog(), ScreenshotUtil.NEW_DASHBOARD_FOLDER + "process-viewer-widget-configuration", new ScreenshotMargin(20));
+
+    processViewerPage.clickSaveProcessViewerWidget();
+    redirectToRelativeLink(PORTAL_HOME_PAGE_URL);
+    homePage = new NewDashboardPage();
+    ScreenshotUtil.captureElementScreenshot(homePage.waitAndGetProcessViewerWidget(0), ScreenshotUtil.NEW_DASHBOARD_FOLDER + "process-viewer-widget");
+  }
+
+  @Test
+  public void screenshotStatisticChartWidget() throws IOException {
+    ScreenshotUtil.maximizeBrowser();
+    loginAsAdminAndAddPublicWidget(NewDashboardDetailsEditPage.STATISTIC_WIDGET);
+    StatisticEditWidgetNewDashboardPage statisticPage = new StatisticEditWidgetNewDashboardPage();
+    statisticPage.selectFirstChart();
+    statisticPage.clickPreviewButton();
+    ScreenshotUtil.captureElementWithMarginOptionScreenshot(statisticPage.getConfigurationDialog(), ScreenshotUtil.NEW_DASHBOARD_FOLDER + "statistic-chart-widget-configuration", new ScreenshotMargin(20));
+
+    statisticPage.save();
+    redirectToRelativeLink(PORTAL_HOME_PAGE_URL);
+    homePage = new NewDashboardPage();
+    ScreenshotUtil.captureElementScreenshot(homePage.waitAndGetStatisticChart(0), ScreenshotUtil.NEW_DASHBOARD_FOLDER + "statistic-chart-widget");
+  }
+
+  @Test
+  public void screenshotWelcomeWidget() throws IOException {
+    ScreenshotUtil.maximizeBrowser();
+    loginAsAdminAndAddPublicWidget(NewDashboardDetailsEditPage.WELCOME_WIDGET);
+    WelcomeEditWidgetNewDashboardPage welcomeWidgetPage = new WelcomeEditWidgetNewDashboardPage();
+    welcomeWidgetPage.waitForDialogLoaded();
+    ScreenshotUtil.captureElementWithMarginOptionScreenshot(welcomeWidgetPage.getConfigurationDialog(), ScreenshotUtil.NEW_DASHBOARD_FOLDER + "welcome-widget-configuration", new ScreenshotMargin(20));
+  }
+
+  @Test
+  public void screenshotNewsFeedWidget() throws IOException {
+    login(TestAccount.ADMIN_USER);
+    redirectToRelativeLink("portalKitTestHelper/153CACC26D0D4C3D/createSampleNewsFeed.ivp");
+    ScreenshotUtil.maximizeBrowser();
+    loginAsAdminAndAddPublicWidget(NewDashboardDetailsEditPage.NEWS_WIDGET);
+    DashboardNewsWidgetConfigurationPage newsWidgetPage = new DashboardNewsWidgetConfigurationPage();
+
+    ScreenshotUtil.captureElementWithMarginOptionScreenshot(newsWidgetPage.getConfigurationDialog(),
+        ScreenshotUtil.NEW_DASHBOARD_FOLDER + "news-feed-widget-configuration", new ScreenshotMargin(20));
+    newsWidgetPage.save();
+
+    ConfigurationJsonUtil.updateJSONSetting("dashboard-has-newsfeed.json", Variable.DASHBOARD);
+    redirectToRelativeLink(PORTAL_HOME_PAGE_URL);
+    
+    homePage = new NewDashboardPage();
+
+    ScreenshotUtil.captureElementScreenshot(homePage.waitAndGetNewsWidget(0),
+        ScreenshotUtil.NEW_DASHBOARD_FOLDER + "news-feed-widget");
+    ScreenshotUtil.resizeBrowser(new Dimension(900, 850));
+    DashboardNewsWidgetPage newDashboardPage = new DashboardNewsWidgetPage("News feed");
+    
+    newDashboardPage.openAddNewsFeedItemDialog();
+    newDashboardPage.enterNewsItemData("en", "si-send-email", "Welcome to Portal News feed", "Welcome to Portal News feed");
+    ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.NEW_DASHBOARD_FOLDER + "news-feed-widget-manage-content");
+  }
+
   private void redirectToDashboardConfiguration() {
     redirectToRelativeLink("portal/1549F58C18A6C562/PortalDashboardConfiguration.ivp");
+  }
+
+  private void loginAsAdminAndAddPublicWidget(String widgetName) {
+    login(TestAccount.ADMIN_USER);
+    updatePortalSetting(Variable.SHOW_LEGACY_UI .getKey(), "false");
+    redirectToDashboardConfiguration();
+    DashboardConfigurationPage configPage = new DashboardConfigurationPage();
+    configPage.selectPublicDashboardType();
+    DashboardModificationPage editPage = configPage.openEditPublicDashboardsPage();
+    NewDashboardDetailsEditPage detailsEditPage = editPage.navigateToEditDashboardDetailsByName("Dashboard");
+    detailsEditPage.waitPageLoaded();
+    detailsEditPage.addWidget();
+    detailsEditPage.addWidgetByName(widgetName);
   }
 }
