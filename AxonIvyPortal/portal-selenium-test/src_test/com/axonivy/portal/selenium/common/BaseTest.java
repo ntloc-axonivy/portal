@@ -88,6 +88,8 @@ public class BaseTest {
   protected String grantDashboardShareLinkPermissionUrl = "PortalKitTestHelper/14DE09882B540AD5/grantDashboardShareLinkPermission.ivp";
   protected String denyDashboardShareLinkPermissionUrl = "PortalKitTestHelper/14DE09882B540AD5/denyDashboardShareLinkPermission.ivp";
   protected String showProcessViewerUrl = "portal/1549F58C18A6C562/PortalProcessViewer.ivp?caseId=%s&processKey=%s";
+  protected String processViewerExampleInFrameUrl = "portal-components-examples/1821592826979C20/showProcessViewerOfLeaveRequestUsingProcessLink.ivp";
+  protected String securityMemberNameAndAvatarExampleInFrameUrl = "/portal-components-examples/182A5FCAF7FC6B1A/showSecurityMemberNameAndAvatarExamples.ivp?embedInFrame";
 
 
   protected void redirectToNewDashBoard() {

@@ -9,7 +9,7 @@ public class ProcessHistoryPage extends TemplatePage{
 
   @Override
   protected String getLoadedLocator() {
-    return ".layout-wrapper";
+    return LAYOUT_WRAPPER;
   }
   
   @SuppressWarnings("deprecation")

@@ -22,9 +22,10 @@ import com.axonivy.portal.selenium.page.ProcessViewerPage;
 import com.axonivy.portal.selenium.page.StatisticWidgetPage;
 import com.axonivy.portal.selenium.page.TaskTemplatePage;
 import com.axonivy.portal.selenium.page.component.DocumentTableComponentPage;
+import com.axonivy.portal.selenium.page.component.ProcessViewerComponentPage;
 import com.axonivy.portal.selenium.page.component.RoleSelectionComponentPage;
+import com.axonivy.portal.selenium.page.component.SecurityMemberNameAndAvatarComponentPage;
 import com.axonivy.portal.selenium.page.component.UserSelectionComponentPage;
-import com.codeborne.selenide.WebDriverRunner;
 
 @IvyWebTest(headless = false)
 public class AdditionalComponentsScreenshotTest extends ScreenshotBaseTest{
@@ -158,43 +159,37 @@ public class AdditionalComponentsScreenshotTest extends ScreenshotBaseTest{
   @Test
   public void captureScreenshotProcessViewerPage() throws IOException {
     createTestingTasks();
-//    var homePage = new HomePage();
     MainMenuPage mainMenuPage = new MainMenuPage();
-    mainMenuPage.expandMainMenu();
-//    var mainMenuPage = homePage.openMainMenu();
     var caseWidgetPage = mainMenuPage.openCaseList();
-    mainMenuPage.expandMainMenu();
     var caseId = caseWidgetPage.getCaseId(0);
     redirectToRelativeLink(String.format(showProcessViewerUrl, caseId, ""));
     ScreenshotUtil.resizeBrowser(new Dimension(1366, 1000));
     ProcessViewerPage processViewerPage = new ProcessViewerPage();
     assertTrue(!processViewerPage.getProcessRequestPath().isEmpty());
-    WaitHelper.waitForIFrameAvailable(WebDriverRunner.getWebDriver(), "process-viewer");
-//    WaitHelper.assertTrueWithWait(() -> !processViewerPage.getProcessRequestPath().isEmpty());
-//    processViewerPage.waitForSprottyToolDisplayed();
+    processViewerPage.waitForSprottyToolDisplayed();
     ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.CASE_WIDGET_FOLDER + "portal-process-viewer");
   }
 
-//  @Test
-//  public void captureScreenshotProcessViewerComponent() throws IOException {
-//    redirectToRelativeLink(processViewerExampleInFrameUrl);
-//    ScreenshotUtil.resizeBrowser(new Dimension(1366, 1000));
-//    ProcessViewerComponentPage processViewerPage = new ProcessViewerComponentPage();
-//    processViewerPage.waitForSprottyToolDisplayed(); 
-//    ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.COMPONENTS_FOLDER + "portal-process-viewer-component");
-//  }
-//
-//  @Test
-//  public void captureScreenshotSecurityMemberNameAndAvatarComponent() throws IOException {
-//    redirectToRelativeLink(securityMemberNameAndAvatarExampleInFrameUrl);
-//    ScreenshotUtil.resizeBrowser(new Dimension(1366, 1000));
-//    SecurityMemberNameAndAvatarComponentPage securityMemberNameAndAvatarComponentPage = new SecurityMemberNameAndAvatarComponentPage();
-//    ScreenshotUtil.captureElementScreenshot(
-//        securityMemberNameAndAvatarComponentPage.getCurrentSessionUserSecurityMemberNameAndAvatarComponentContainer(),
-//        ScreenshotUtil.COMPONENTS_FOLDER + "session-user-security-member-name-and-avatar");
-//    ScreenshotUtil.captureElementScreenshot(
-//        securityMemberNameAndAvatarComponentPage.getCurrentSessionRoleSecurityMemberNameAndAvatarComponentContainer(),
-//        ScreenshotUtil.COMPONENTS_FOLDER + "session-role-security-member-name-and-avatar");
-//  }
+  @Test
+  public void captureScreenshotProcessViewerComponent() throws IOException {
+    redirectToRelativeLink(processViewerExampleInFrameUrl);
+    ScreenshotUtil.resizeBrowser(new Dimension(1366, 1000));
+    ProcessViewerComponentPage processViewerPage = new ProcessViewerComponentPage();
+    processViewerPage.waitForSprottyToolDisplayed(); 
+    ScreenshotUtil.capturePageScreenshot(ScreenshotUtil.COMPONENTS_FOLDER + "portal-process-viewer-component");
+  }
+
+  @Test
+  public void captureScreenshotSecurityMemberNameAndAvatarComponent() throws IOException {
+    redirectToRelativeLink(securityMemberNameAndAvatarExampleInFrameUrl);
+    ScreenshotUtil.resizeBrowser(new Dimension(1366, 1000));
+    SecurityMemberNameAndAvatarComponentPage securityMemberNameAndAvatarComponentPage = new SecurityMemberNameAndAvatarComponentPage();
+    ScreenshotUtil.captureElementScreenshot(
+        securityMemberNameAndAvatarComponentPage.getCurrentSessionUserSecurityMemberNameAndAvatarComponentContainer(),
+        ScreenshotUtil.COMPONENTS_FOLDER + "session-user-security-member-name-and-avatar");
+    ScreenshotUtil.captureElementScreenshot(
+        securityMemberNameAndAvatarComponentPage.getCurrentSessionRoleSecurityMemberNameAndAvatarComponentContainer(),
+        ScreenshotUtil.COMPONENTS_FOLDER + "session-role-security-member-name-and-avatar");
+  }
 
 }

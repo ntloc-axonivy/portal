@@ -1,19 +1,15 @@
-package com.axonivy.portal.selenium.page;
+package com.axonivy.portal.selenium.page.component;
 
 import static com.codeborne.selenide.Selenide.$;
 
+import com.axonivy.portal.selenium.page.TemplatePage;
 import com.codeborne.selenide.Condition;
 
-public class ProcessViewerPage extends TemplatePage{
+public class ProcessViewerComponentPage extends TemplatePage{
 
   @Override
   protected String getLoadedLocator() {
-    return "[id='portal-process-viewer-form']";
-  }
-  
-  public String getProcessRequestPath() {
-    $("[id='process-viewer-information'").shouldBe(Condition.appear, DEFAULT_TIMEOUT);
-    return $("[id$='portal-process-viewer-form'] [id$='request-path']").getText();
+    return LAYOUT_WRAPPER;
   }
   
   public void waitForSprottyToolDisplayed() {
@@ -21,5 +17,4 @@ public class ProcessViewerPage extends TemplatePage{
     $("[id='sprotty']").shouldBe(Condition.appear, DEFAULT_TIMEOUT);
     $(".sprotty-graph").shouldBe(Condition.appear, DEFAULT_TIMEOUT);
   }
-
 }
