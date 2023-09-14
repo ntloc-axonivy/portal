@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.axonivy.portal.selenium.common.WaitHelper;
 import com.codeborne.selenide.Condition;
@@ -754,7 +755,37 @@ public class NewDashboardPage extends TemplatePage {
     $("#search-results-tabview").shouldBe(appear, DEFAULT_TIMEOUT);
     return new GlobalSearchResultPage();
   }
+
+  public void waitForCaseWidgetLoaded() {
+    checkDisplayedCaseWidgetContainer();
+    getCaseWidgetTable().shouldBe(Condition.appear, DEFAULT_TIMEOUT);
+  }
+
+  public SelenideElement openWidgetFilter(int index) {
+    $("[id$='filter-sidebar-link-" + index + "']").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    var result = $("div[id$=':filter-overlay-panel-" + index + "']").shouldBe(appear, DEFAULT_TIMEOUT);
+    result.$("[class*='js-loading-']").shouldBe(disappear, DEFAULT_TIMEOUT);
+    result.$(".filter-overlay-panel__header").shouldBe(appear, DEFAULT_TIMEOUT).click();
+    return result;
+  }
+
+  public void closeWidgetFilter(int index) {
+    var widgetFilterPanel = $("div[id$=':filter-overlay-panel-" + index + "']").shouldBe(appear, DEFAULT_TIMEOUT);
+    widgetFilterPanel.$(".ui-overlaypanel-footer__cancel").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    widgetFilterPanel.shouldBe(disappear, DEFAULT_TIMEOUT);
+  }
+
   
+  public WebElement openWidgetInformation(int index) {
+    String widgetInfo =  String.format("button[id$=':info-sidebar-link-%d']", index);
+    $(widgetInfo).shouldBe(appear, DEFAULT_TIMEOUT).shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+
+    String infoPanel = String.format("div[id$='info-overlay-panel-%d']", index);
+    $(infoPanel).shouldBe(appear, DEFAULT_TIMEOUT).$(".widget-info--type").shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
+    $(infoPanel).$("[class*='js-loading-']").shouldBe(disappear, DEFAULT_TIMEOUT);
+    return $(infoPanel);
+  }
+
   public void startTask(int index) {
     String cssSelector = String.format("a[id$=':task-component:dashboard-tasks:%d:dashboard-tasks-columns:0:start-task']", index);
     $(cssSelector).shouldBe(getClickableCondition()).click();
