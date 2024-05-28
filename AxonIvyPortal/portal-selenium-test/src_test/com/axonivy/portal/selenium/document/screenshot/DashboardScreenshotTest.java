@@ -61,6 +61,7 @@ public class DashboardScreenshotTest extends ScreenshotBaseTest {
 
   @Test
   public void screenshotNewDashboard() throws IOException {
+    createJSonFile("new-dashboard-template.json", PortalVariable.DASHBOARD.key);
     showNewDashboard();
     homePage = new NewDashboardPage();
     homePage.waitForCaseWidgetLoaded();

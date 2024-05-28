@@ -1,0 +1,312 @@
+[
+    {
+        "id": "public-dashboard",
+        "permissions": [
+            "Everybody"
+        ],
+        "templateId": "default-portal-dashboard-template",
+        "widgets": [
+            {
+                "canWorkOn": true,
+                "columns": [
+                    {
+                        "field": "start"
+                    },
+                    {
+                        "field": "priority"
+                    },
+                    {
+                        "field": "id",
+                        "quickSearch": false,
+                        "visible": false
+                    },
+                    {
+                        "field": "name",
+                        "quickSearch": true
+                    },
+                    {
+                        "field": "description",
+                        "quickSearch": true,
+                        "visible": false
+                    },
+                    {
+                        "field": "activator",
+                        "quickSearch": false
+                    },
+                    {
+                        "field": "state",
+                        "visible": false
+                    },
+                    {
+                        "field": "startTimestamp",
+                        "visible": false
+                    },
+                    {
+                        "field": "expiryTimestamp"
+                    },
+                    {
+                        "field": "category",
+                        "quickSearch": false,
+                        "visible": false
+                    },
+                    {
+                        "field": "actions"
+                    }
+                ],
+                "enableQuickSearch": true,
+                "filters": [
+                    {
+                        "field": "state",
+                        "operator": "in",
+                        "type": "standard",
+                        "values": [
+                            "DONE",
+                            "IN_PROGRESS",
+                            "OPEN"
+                        ]
+                    }
+                ],
+                "id": "task_1",
+                "layout": {
+                    "h": 6,
+                    "w": 8,
+                    "x": 0,
+                    "y": 2
+                },
+                "names": [
+                    {
+                        "locale": "en",
+                        "value": "Your Tasks"
+                    },
+                    {
+                        "locale": "de",
+                        "value": "Ihre Aufgaben"
+                    },
+                    {
+                        "locale": "fr",
+                        "value": "Vos t\u00e2ches"
+                    },
+                    {
+                        "locale": "es",
+                        "value": "Sus tareas"
+                    }
+                ],
+                "rowsPerPage": 5,
+                "sortDescending": true,
+                "sortField": "startTimestamp",
+                "type": "task"
+            },
+            {
+                "columns": [
+                    {
+                        "field": "id",
+                        "quickSearch": false
+                    },
+                    {
+                        "field": "name",
+                        "quickSearch": true
+                    },
+                    {
+                        "field": "description",
+                        "quickSearch": true,
+                        "visible": false
+                    },
+                    {
+                        "field": "state"
+                    },
+                    {
+                        "field": "creator",
+                        "quickSearch": false
+                    },
+                    {
+                        "field": "startTimestamp"
+                    },
+                    {
+                        "field": "endTimestamp",
+                        "visible": false
+                    },
+                    {
+                        "field": "category",
+                        "quickSearch": false,
+                        "visible": false
+                    },
+                    {
+                        "field": "actions"
+                    }
+                ],
+                "filters": [
+                    {
+                        "field": "state",
+                        "operator": "in",
+                        "type": "standard",
+                        "values": [
+                            "OPEN"
+                        ]
+                    }
+                ],
+                "id": "case_1",
+                "layout": {
+                    "h": 6,
+                    "w": 9,
+                    "x": 3,
+                    "y": 8
+                },
+                "names": [
+                    {
+                        "locale": "en",
+                        "value": "Your Cases"
+                    },
+                    {
+                        "locale": "de",
+                        "value": "Ihre F\u00e4lle"
+                    },
+                    {
+                        "locale": "fr",
+                        "value": "Vos affaires"
+                    },
+                    {
+                        "locale": "es",
+                        "value": "Sus casos"
+                    }
+                ],
+                "rowsPerPage": 5,
+                "sortDescending": true,
+                "sortField": "startTimestamp",
+                "type": "case"
+            },
+            {
+                "id": "process_1",
+                "layout": {
+                    "h": 4,
+                    "w": 4,
+                    "x": 8,
+                    "y": 4
+                },
+                "names": [
+                    {
+                        "locale": "en",
+                        "value": "Your Processes"
+                    },
+                    {
+                        "locale": "de",
+                        "value": "Ihre Prozesse"
+                    },
+                    {
+                        "locale": "fr",
+                        "value": "Vos processus"
+                    },
+                    {
+                        "locale": "es",
+                        "value": "Sus procesos"
+                    }
+                ],
+                "type": "compact-process"
+            },
+            {
+                "greeting": true,
+                "id": "welcome_1",
+                "layout": {
+                    "h": 2,
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                },
+                "names": [
+                    {
+                        "locale": "en",
+                        "value": "Your Welcome Widget"
+                    }
+                ],
+                "type": "welcome",
+                "welcomeImageFit": "COVER",
+                "welcomeTextColor": "#ffffff",
+                "welcomeTextPosition": "TOP_LEFT",
+                "welcomeTexts": [
+                    {
+                        "locale": "en",
+                        "value": ", welcome to the Axon Ivy Portal!"
+                    },
+                    {
+                        "locale": "fr",
+                        "value": ", bienvenue sur le portail Axon Ivy!"
+                    },
+                    {
+                        "locale": "de",
+                        "value": ", willkommen im Axon Ivy Portal!"
+                    },
+                    {
+                        "locale": "es",
+                        "value": ", bienvenido al portal Axon Ivy!"
+                    }
+                ],
+                "welcomeTextSize": "HEADING_3"
+            },
+            {
+                "chartId": "10",
+                "id": "client_statistic_1",
+                "layout": {
+                    "h": 2,
+                    "w": 2,
+                    "x": 8,
+                    "y": 2
+                },
+                "type": "client-statistic"
+            },
+            {
+                "chartId": "11",
+                "id": "client_statistic_2",
+                "layout": {
+                    "h": 2,
+                    "w": 2,
+                    "x": 10,
+                    "y": 2
+                },
+                "type": "client-statistic"
+            },
+            {
+                "chartId": "7",
+                "id": "client_statistic_3",
+                "layout": {
+                    "h": 3,
+                    "w": 3,
+                    "x": 0,
+                    "y": 11
+                },
+                "type": "client-statistic"
+            },
+            {
+                "chartId": "3",
+                "id": "client_statistic_4",
+                "layout": {
+                    "h": 3,
+                    "w": 3,
+                    "x": 0,
+                    "y": 8
+                },
+                "type": "client-statistic"
+            },
+            {
+                "chartId": "5",
+                "id": "client_statistic_5",
+                "layout": {
+                    "h": 3,
+                    "w": 3,
+                    "x": 0,
+                    "y": 14
+                },
+                "type": "client-statistic"
+            },
+            {
+                "chartId": "4",
+                "id": "client_statistic_6",
+                "layout": {
+                    "h": 3,
+                    "w": 9,
+                    "x": 3,
+                    "y": 14
+                },
+                "type": "client-statistic"
+            }
+        ]
+    }
+]

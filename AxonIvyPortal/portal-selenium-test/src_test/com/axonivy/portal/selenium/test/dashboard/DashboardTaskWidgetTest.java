@@ -37,7 +37,6 @@ public class DashboardTaskWidgetTest extends BaseTest {
   private static final String SICK_LEAVE_REQUEST = "Sick Leave Request";
   private static final String DESTROYED = "Destroyed";
   private static final String TASK_NUMBER = "Task number";
-  private static final String DONE = "Done";
   private static final String NEW_YOUR_TASK = "New Your Tasks";
   private static final String EXPIRE_TODAY = "Expire today";
   private static final String TASK_NAME = "Task name";

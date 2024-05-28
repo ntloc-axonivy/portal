@@ -63,6 +63,8 @@ function highlightTopBar() {
   $(searchIcon).addClass("red-topbottomleft-medium-border");
   var themeSwitchIcon = topMenu.find("li.topbar-item.themeswitch-item");
   $(themeSwitchIcon).addClass("red-topbottom-medium-border");
+  var notificationIcon = topMenu.find("li.topbar-item.notification-item");
+  $(notificationIcon).addClass("red-topbottom-medium-border");
   var chatItem = topMenu.find("li.topbar-item.chat-item");
   $(chatItem).addClass("red-topbottom-medium-border");
   var userNameItem = topMenu.find("li.topbar-item.user-profile.setting-container");

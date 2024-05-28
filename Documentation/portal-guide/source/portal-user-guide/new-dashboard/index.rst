@@ -26,11 +26,7 @@ The following default widgets are available:
 
 #. **Process viewer widget**: This widget provides a visual representation of the process flow.
 
-#. **Legacy statistic chart widget**: This widget provides graphical display of legacy statistical data.
-
-#. **Statistic chart widget**: This widget provides graphical display of statistical data.
-
-#. **Client Statistic chart widget**: This widget provides graphical display of client statistical data.
+#. **Client statistic chart widget**: This widget provides graphical display of client statistical data.
 
 #. **Welcome widget**: This widget greets the user based on the local time and enables a friendlier approach.
 
@@ -348,7 +344,7 @@ You can define a Notifications widget to display all Notifications based on your
 
 .. include:: ../includes/_common-icon.rst
 
-.. |dash-board| image:: ../../screenshots/new-dashboard/dashboard.png
+.. |dash-board| image:: ../../screenshots/dashboard/dashboard.png
 .. |widget-filter| image:: ../../screenshots/new-dashboard/widget-filter.png
 .. |widget-info| image:: ../../screenshots/new-dashboard/widget-info.png
 .. |case-export-excel| image:: ../../screenshots/new-dashboard/case-export-excel.png

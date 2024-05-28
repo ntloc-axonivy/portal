@@ -268,11 +268,6 @@ public class TaskWidgetNewDashBoardPage extends TemplatePage {
     return $("div[id$='states_panel']").shouldBe(appear, DEFAULT_TIMEOUT).$("a.ui-selectcheckboxmenu-close");
   }
 
-  private SelenideElement getFilterCheckBox(String inputField) {
-    return $("div[id$='widget-filter-content']").shouldBe(appear, DEFAULT_TIMEOUT)
-        .$$("div.widget-filter-panel div.ui-g").filter(text(inputField)).first();
-  }
-
   public void selectState(String state) {
     getStateFilterCheckBox(state).shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();
     getCloseStateFilter().shouldBe(getClickableCondition(), DEFAULT_TIMEOUT).click();

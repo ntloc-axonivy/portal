@@ -50,7 +50,7 @@
               listener="#{themeBean.toggleTheme()}" update="theme-switcher" />
           </p:commandLink>
         </li>
-        <li class="topbar-item">
+        <li class="topbar-item notification-item">
           <p:commandLink id="open-notifications-panel" global="false" update="#{p:resolveFirstComponentWithId('has-notifications', view).clientId}" 
           rendered="#{notificationBean.isBellIconNeeded}"
           actionListener="#{notificationBean.setRender(true)}" onclick="openNotificationPanel()" process="@this">
