@@ -38,7 +38,6 @@ autolabeler:
       - '/IVYPORTAL-[0-9]{1,4}/'
 exclude-labels:
   - 'skip-changelog'
-include-pre-releases: 'true'
 change-template: '- $TITLE (#$NUMBER) by @$AUTHOR'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
@@ -56,3 +55,5 @@ template: |
   ## Changes
 
   $CHANGES
+
+include-pre-releases: true

@@ -8,6 +8,7 @@ Admin Settings
    the :guilabel:`Admin settings` user menu item. They can update Portal settings, 
    as well as define, show and hide the announcement. 
 
+
 Select the :guilabel:`Admin settings` user menu item.
 
    |select-admin-settings|
