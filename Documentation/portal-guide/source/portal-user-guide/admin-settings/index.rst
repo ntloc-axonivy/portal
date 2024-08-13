@@ -5,7 +5,7 @@ Admin Settings
 
 .. hint::
    Only users who have granted the role ``AXONIVY_PORTAL_ADMIN`` can see and access 
-   the :guilabel:`Admin settings` user menu item. They can update Portal settings, 
+   the :guilabel:`Admin settings` user menu item. They can update Portal settings,
    as well as define, show and hide the announcement.
 
 Select the :guilabel:`Admin settings` user menu item.
