@@ -7,3 +7,4 @@
 3. Run Jenkins Build http://zugprojenkins
 4. Prepare next development cycle by increasing version `revision` in `Documenation/maven/pom.xml` and adding `-SNASPHOT`
 5. Commit change and push it to remote repository
+test
