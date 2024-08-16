@@ -8,7 +8,7 @@ See the [Axon Ivy Portal on the Axon Ivy Market](https://market.axonivy.com/port
 
 ## License
 
-See the [LICENSE](LICENSE) file for license rights and limitations (Apache License 2.0).
+See the [LICENSE](LICENSE) file for license rights and limitations (Apache License 2.0). test
 
 
 ## Supported Versions
