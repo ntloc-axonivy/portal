@@ -22,9 +22,15 @@ changelog:
     labels:
       - skip-changelog
   replacers:
-    - search: '/MARP-(\d+)/g'
-      replace: '[MARP-$1](https://1ivy.atlassian.net/browse/MARP-$1)'
+    - search: '/IVYPORTAL-(\d+)/g'
+      replace: '[IVYPORTAL-$1](https://1ivy.atlassian.net/browse/IVYPORTAL-$1)'
   template: |
-    ## Changes
-  
-    $CHANGES
+    ## 🚀 New Features
+    $CHANGES(feature)
+
+    ## 🐛 Bug Fixes
+    $CHANGES(bug)
+
+    ## 📦 Maintenance
+    $CHANGES(chore)
+
