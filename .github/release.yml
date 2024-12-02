@@ -18,6 +18,13 @@ changelog:
       labels:
         - docs
         - documentation
-  exclude-labels:
-    - 'skip-changelog'
-
+  exclude:
+    labels:
+      - skip-changelog
+  replacers:
+    - search: '/MARP-(\d+)/g'
+      replace: '[MARP-$1](https://1ivy.atlassian.net/browse/MARP-$1)'
+  template: |
+    ## Changes
+  
+    $CHANGES
