@@ -1,7 +1,3 @@
-replacers:
-  - search: 'IVYPORTAL-(\d+)'
-    replace: '[IVYPORTAL-$1](https://1ivy.atlassian.net/browse/IVYPORTAL-$1)'
-
 changelog:
   categories:
     - title: '🚀 Features'
@@ -25,13 +21,4 @@ changelog:
   exclude:
     labels:
       - skip-changelog
-  template: |
-    ## 🚀 New Features 112
-    $CHANGES(feature)
-
-    ## 🐛 Bug Fixes
-    $CHANGES(bug)
-
-    ## 📦 Maintenance
-    $CHANGES(chore)
 
