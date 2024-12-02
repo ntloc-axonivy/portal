@@ -26,7 +26,7 @@ changelog:
     labels:
       - skip-changelog
   template: |
-    ## 🚀 New Features
+    ## 🚀 New Features 112
     $CHANGES(feature)
 
     ## 🐛 Bug Fixes
