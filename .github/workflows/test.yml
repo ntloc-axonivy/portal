@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     # First cron at midnight UTC
-    - cron: '10 10 * * *'
+    - cron: '19 17 * * *'
     # Second cron at midnight UTC
-    - cron: '11 10 * * *'
+    - cron: '20 17 * * *'
 jobs:
   first-midnight-job:
     runs-on: loc-pc
