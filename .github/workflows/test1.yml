@@ -18,3 +18,18 @@ jobs:
               workflow_id: 'test-10.yml',
               ref: 'release/10.0'
             })
+            
+  trigger-second-workflow:
+    runs-on: loc-pc
+    steps:
+      - name: Trigger second workflow
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'test.yml',
+              ref: 'master'
+            })
