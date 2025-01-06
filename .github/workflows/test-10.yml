@@ -1,0 +1,11 @@
+name: branch 10
+run-name: branch 10
+on:
+  workflow_dispatch:
+    
+jobs:
+  trigger-first-workflow:
+    runs-on: loc-pc
+    steps:
+      - name: Trigger first workflow
+        run: echo "test xiu ne"
