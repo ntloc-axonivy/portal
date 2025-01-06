@@ -3,9 +3,9 @@ name: Midnight Cron Jobs
 on:
   schedule:
     # First cron at midnight UTC
-    - cron: '49 16 * * *'
+    - cron: '50 9 * * *'
     # Second cron at midnight UTC
-    - cron: '48 16 * * *'
+    - cron: '51 9 * * *'
 
 jobs:
   first-midnight-job:
