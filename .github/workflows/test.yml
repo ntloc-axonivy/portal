@@ -1,5 +1,5 @@
 name: Test cron workflow
-
+run-name: Test cron workflow 10
 on:
   workflow_dispatch:
 
