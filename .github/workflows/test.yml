@@ -1,12 +1,12 @@
-name: Midnight Cron Jobs
+name: Cron bot
 
 on:
   workflow_dispatch:
   schedule:
     # First cron at midnight UTC
-    - cron: '50 10 * * *'
+    - cron: '45 11 * * *'
     # Second cron at midnight UTC
-    - cron: '56 10 * * *'
+    - cron: '50 10 * * *'
 jobs:
   first-midnight-job:
     runs-on: loc-pc
@@ -19,3 +19,33 @@ jobs:
     steps:        
       - name: Run second midnight task
         run: echo "Running second midnight task"
+
+  trigger-first-workflow:
+    runs-on: loc-pc
+    steps:
+      - name: Trigger first workflow
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'test.yml',
+              ref: 'release/10.0'
+            })
+
+  trigger-second-workflow:
+    runs-on: loc-pc
+    steps:
+      - name: Trigger second workflow
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'test-workflow.yml',
+              ref: 'master'
+            })
