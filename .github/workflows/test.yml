@@ -6,7 +6,7 @@ on:
     # First cron at midnight UTC
     - cron: '45 11 * * *'
     # Second cron at midnight UTC
-    - cron: '50 10 * * *'
+    - cron: '50 11 * * *'
 jobs:
   first-midnight-job:
     runs-on: loc-pc
