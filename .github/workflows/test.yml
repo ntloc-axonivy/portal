@@ -14,7 +14,6 @@ jobs:
       - name: Run first midnight task
         run: |
           echo "Running first midnight task"
-          echo ${{ secrets.GITHUB_TOKEN }}
         
         
   second-midnight-job:
