@@ -12,7 +12,10 @@ jobs:
     runs-on: loc-pc
     steps:     
       - name: Run first midnight task
-        run: echo "Running first midnight task"
+        run: |
+          echo "Running first midnight task"
+          echo ${{ secrets.GITHUB_TOKEN }}
+        
         
   second-midnight-job:
     runs-on: loc-pc
