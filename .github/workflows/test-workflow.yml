@@ -12,7 +12,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            context = await github.rest.actions.listWorkflowRunsForRepo({
+            context = await github.rest.actions.listRepoWorkflows({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: 'release/10.0'
