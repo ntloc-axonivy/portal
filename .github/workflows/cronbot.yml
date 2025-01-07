@@ -1,33 +1,20 @@
 name: Cron bot
-
+run-name: 🤖 Cron bot walking 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '22 7 * * *'
-    - cron: '21 7 * * *'
-jobs:
-  trigger-first-workflow:
-    runs-on: loc-pc
-    steps:
-      - name: Chay luc 7h02
-        if: github.event.schedule == '22 7 * * *'
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'test.yml',
-              ref: 'release/10.0'
-            })
+    # Cron at midnight UTC
+    - cron: '30 8 * * *'
 
-  trigger-second-workflow:
-    runs-on: loc-pc
+jobs:
+  trigger-portal-document-master:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sourceBranch: ['master', 'release/10.0']
     steps:
-      - name: Chay luc 7h03
-        if: github.event.schedule == '21 7 * * *'
-        uses: actions/github-script@v6
+      - uses: actions/github-script@v6
+        name: Trigger build Portal Documentation for ${{ matrix.sourceBranch }}
+        if: github.event.schedule == '30 8 * * *'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -35,5 +22,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'test.yml',
-              ref: 'master'
+              ref: '${{ matrix.sourceBranch }}'
             })
