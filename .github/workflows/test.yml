@@ -1,13 +1,8 @@
-name: Midnight Cron Jobs
+name: Test cron workflow 10
 
 on:
   workflow_dispatch:
-  push:
-  schedule:
-    # First cron at midnight UTC
-    - cron: '50 10 * * *'
-    # Second cron at midnight UTC
-    - cron: '56 10 * * *'
+
 jobs:
   first-midnight-job:
     runs-on: loc-pc
