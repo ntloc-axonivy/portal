@@ -1,11 +1,22 @@
-name: branch 10
-run-name: branch 10
+name: Midnight Cron Jobs
+
 on:
   workflow_dispatch:
-    
+  schedule:
+    # First cron at midnight UTC
+    - cron: '50 10 * * *'
+    # Second cron at midnight UTC
+    - cron: '56 10 * * *'
 jobs:
-  trigger-first-workflow:
+  first-midnight-job:
     runs-on: loc-pc
-    steps:
-      - name: Trigger first workflow
-        run: echo "test xiu ne"
+    steps:     
+      - name: Run first midnight task
+        run: echo "Running first midnight task"
+        
+  second-midnight-job:
+    runs-on: loc-pc
+    steps:        
+      - name: Run second midnight task
+        run: echo "Running second midnight task"
+
