@@ -1,4 +1,4 @@
-name: Test workflow
+name: Test cron workflow master
 
 on:
   workflow_dispatch:
