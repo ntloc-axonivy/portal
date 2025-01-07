@@ -2,6 +2,7 @@ name: Midnight Cron Jobs
 
 on:
   workflow_dispatch:
+  push:
   schedule:
     # First cron at midnight UTC
     - cron: '50 10 * * *'
