@@ -4,26 +4,15 @@ on:
   workflow_dispatch:
   schedule:
     # First cron at midnight UTC
-    - cron: '45 11 * * *'
+    - cron: '2 7 * * *'
     # Second cron at midnight UTC
-    - cron: '50 11 * * *'
+    - cron: '3 7 * * *'
 jobs:
-  first-midnight-job:
-    runs-on: loc-pc
-    steps:     
-      - name: Run first midnight task
-        run: echo "Running first midnight task"
-        
-  second-midnight-job:
-    runs-on: loc-pc
-    steps:        
-      - name: Run second midnight task
-        run: echo "Running second midnight task"
-
   trigger-first-workflow:
     runs-on: loc-pc
     steps:
-      - name: Trigger first workflow
+      - name: Chay luc 7h02
+        if: github.event.schedule == '2 7 * * *'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -38,7 +27,8 @@ jobs:
   trigger-second-workflow:
     runs-on: loc-pc
     steps:
-      - name: Trigger second workflow
+      - name: Chay luc 7h03
+        if: github.event.schedule == '3 7 * * *'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
