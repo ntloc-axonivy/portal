@@ -4,17 +4,16 @@ on:
   workflow_dispatch:
     
 jobs:
-  trigger-first-workflow:
+  first-midnight-job:
     runs-on: loc-pc
-    steps:
-      - name: Trigger first workflow
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            context = await github.rest.actions.listRepoWorkflows({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'release/10.0'
-            })
-            console.log(context)
+    steps:     
+      - name: Run first midnight task
+        run: |
+          echo "Running first midnight task"
+        
+        
+  second-midnight-job:
+    runs-on: loc-pc
+    steps:        
+      - name: Run second midnight task
+        run: echo "Running second midnight task"
