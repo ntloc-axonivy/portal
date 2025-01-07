@@ -1,0 +1,20 @@
+name: Test workflow
+
+on:
+  workflow_dispatch:
+    
+jobs:
+  trigger-first-workflow:
+    runs-on: loc-pc
+    steps:
+      - name: Trigger first workflow
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            context = await github.rest.actions.listWorkflowRunsForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'release/10.0'
+            })
+            console.log(context)
