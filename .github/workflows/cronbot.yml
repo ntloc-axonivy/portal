@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         name: Trigger build Portal Documentation for ${{ matrix.sourceBranch }}
-        if: github.event.schedule == '30 8 * * *'
+        if: github.event.schedule == '50 8 * * *'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
